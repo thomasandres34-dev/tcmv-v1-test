@@ -15,7 +15,7 @@
 <style>
   @font-face{font-family:'SFDisplay';src:url('assets/SFUIDisplay-Bold.ttf') format('truetype');font-weight:600 900;font-style:normal;font-display:swap;}
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
   body{margin:0;background:#fff;color:#000;font-family:'Public Sans',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
   a{color:#000;text-decoration:none;}
   ::selection{background:#000;color:#fff;}
@@ -24,7 +24,8 @@
   summary{list-style:none;cursor:pointer;}
   .faq-plus{transition:transform .25s ease;}
   details[open] .faq-plus{transform:rotate(45deg);}
-  .cta-pill{transition:transform .2s ease,background .2s ease;cursor:pointer;border:none;font-family:'Public Sans',sans-serif;}
+  .cta-pill{transition:transform .2s ease,background .2s ease;cursor:pointer;border:none;font-family:'Public Sans',sans-serif;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+  .modal-final-cta{font-size:12px !important;}
   .cta-pill:hover{transform:translateY(-2px);}
   .nav-link:hover{opacity:0.5;}
   .bento-card{transition:transform .3s ease;}
@@ -37,23 +38,31 @@
   @keyframes marquee-rtl{from{transform:translateX(0);}to{transform:translateX(-50%);}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}}
   @media (max-width:680px){
-    .prog-track{flex-direction:column !important;align-items:center !important;}
-    .prog-track .prog-card{flex:0 0 auto !important;width:min(90vw,400px) !important;}
+    .pre-programs-card{aspect-ratio:4/3 !important;border-radius:20px !important;}
+    .pre-programs-card svg[preserveAspectRatio]{width:70% !important;height:60% !important;}
+    .pre-programs-card ul{max-width:150px !important;gap:8px !important;}
+    .pre-programs-card .pre-programs-label{font-size:9px !important;}
+    [data-screen-label="Sans excuse"]{padding-left:12px !important;padding-right:12px !important;}
+    .pre-programs-img{object-position:30% center !important;}
+    .prog-track{flex-direction:row !important;flex-wrap:nowrap !important;align-items:stretch !important;overflow-x:auto !important;scroll-snap-type:x mandatory !important;scroll-padding-inline:20px !important;-webkit-overflow-scrolling:touch !important;scrollbar-width:none !important;padding-left:20px !important;padding-right:20px !important;gap:12px !important;justify-content:flex-start !important;}
+    .prog-track::-webkit-scrollbar{display:none !important;}
+    .prog-track .prog-card{flex:0 0 auto !important;width:80vw !important;max-width:340px !important;scroll-snap-align:center !important;}
+    .prog-track .prog-card span{white-space:nowrap !important;}
     footer > div:first-child{grid-template-columns:1fr !important;}
     .split-2col-l{max-width:100% !important;}
     .split-2col-l p{max-width:100% !important;}
     .modal-card{max-height:none !important;}
     .modal-cta-row{gap:10px !important;}
-    .modal-cta-row .cta-pill{padding:8px 14px !important;font-size:10.5px !important;}
-    .modal-cta-row span{font-size:13px !important;}
-    .modal-body{padding:16px 18px 20px !important;}
-    .modal-eyebrow{font-size:9px !important;margin-bottom:5px !important;}
-    .modal-title{font-size:18px !important;margin:0 0 6px !important;}
-    .modal-desc{font-size:11.5px !important;line-height:1.4 !important;margin:0 0 12px !important;}
-    .modal-features{gap:4px !important;margin:0 0 12px !important;}
-    .modal-feature-item{font-size:11px !important;}
-    .modal-tags{gap:5px !important;margin-bottom:14px !important;}
-    .modal-tags span{font-size:9px !important;padding:4px 10px !important;}
+    .modal-cta-row > span{font-size:16px !important;}
+    .modal-body{padding:64px 22px 26px !important;}
+    .modal-overlay{align-items:flex-start !important;padding-top:24px !important;}
+    .modal-eyebrow{font-size:11px !important;margin-bottom:8px !important;}
+    .modal-title{font-size:24px !important;margin:0 0 10px !important;}
+    .modal-desc{font-size:14px !important;line-height:1.55 !important;margin:0 0 18px !important;}
+    .modal-features{gap:7px !important;margin:0 0 18px !important;}
+    .modal-feature-item{font-size:13.5px !important;}
+    .modal-tags{gap:7px !important;margin-bottom:20px !important;}
+    .modal-tags span{font-size:12px !important;padding:6px 13px !important;}
     .problem-grid{grid-template-columns:1fr !important;}
     .problem-cell{border-right:none !important;border-bottom:1px solid rgba(255,255,255,0.14);}
     .problem-cell:last-child{border-bottom:none;}
@@ -86,9 +95,18 @@
     .parcours-item:last-child .parcours-item-vline{display:none !important;}
     .parcours-item-vfill{display:block !important;position:absolute !important;left:21px !important;top:44px !important;height:0%;width:1.5px !important;background:#fff !important;transition:height .15s linear;}
     .parcours-item:last-child .parcours-item-vfill{display:none !important;}
+    .hero-centered-logo{display:none !important;}
+    .hero-main-block{padding-bottom:110px !important;}
   }
 </style>
 </helmet>
+
+<template id="__bundler_thumbnail" data-bg-color="#000000">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#000"></rect>
+    <text x="600" y="440" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="200" fill="#fff">TCMV</text>
+  </svg>
+</template>
 
 <div style="width:100%;overflow:hidden;position:relative;background:#fff;--reveal-y:{{ revealY }};--reveal-dur:{{ revealDur }};">
 
@@ -98,16 +116,23 @@
       <video src="assets/hero-video-0729g.mp4" preload="auto" fetchpriority="high" ref="{{ heroVideoRef }}" muted="{{ true }}" loop="{{ true }}" playsinline="{{ true }}" webkit-playsinline="{{ true }}" autoplay="{{ true }}" style="width:100%;height:100%;object-fit:cover;"></video>
       <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.15) 0%,rgba(0,0,0,0.05) 35%,rgba(0,0,0,0.55) 100%);"></div>
     </div>
-    <div style="position:absolute;top:clamp(20px,4vh,36px);left:50%;transform:translateX(-50%);z-index:3;font-family:'SFDisplay',sans-serif;font-weight:800;font-size:14px;letter-spacing:0.02em;color:#fff;">TCMV</div>
-    <div style="position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;padding:0 clamp(24px,6vw,64px) clamp(210px,28vh,250px);">
+
+    <div class="hero-top-bar" style="position:absolute;top:0;left:0;right:0;z-index:4;display:flex;align-items:center;justify-content:flex-end;padding:16px 18px;">
+      <span style="position:absolute;left:50%;transform:translateX(-50%);font-family:'SFDisplay',sans-serif;font-weight:800;font-size:16px;letter-spacing:0.02em;color:#fff;">TCMV</span>
       
-      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:20px;">
-        <a href="#offres" style="background: rgba(255,255,255,0.12); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border: 0.5px solid rgba(255,255,255,0.3); box-shadow: inset 0 1px 1px rgba(255,255,255,0.3),0 10px 30px rgba(0,0,0,0.25); color: #fff; font-size: 14px; font-weight: 700; border-radius: 100px; padding: 15px 30px; cursor: pointer; white-space: nowrap; font-family: SFDisplay; text-decoration:none; display:inline-block;">Démarrer l'entraînement</a>
+    </div>
+
+    <div class="hero-main-block" style="position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;padding:0 clamp(24px,6vw,64px) clamp(210px,28vh,250px);">
+      
+      
+    </div>
+
+    <div class="hero-email-bar" style="position:absolute;bottom:24px;left:16px;right:16px;max-width:520px;margin:0 auto;z-index:4;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.08);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:0.5px solid rgba(255,255,255,0.25);border-radius:14px;padding:6px 6px 6px 16px;">
+      <div style="text-align:left;">
+        <div style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:11px;letter-spacing:0.08em;color:#fff;text-transform:uppercase;">CHOISIS TON PROGRAMME</div>
+        <div style="font-family:'SFDisplay',sans-serif;font-weight:700;font-size:11px;color:rgba(255,255,255,0.6);">3 programmes disponibles</div>
       </div>
-      <div style="position:relative;padding:14px 20px;">
-        <div style="position:absolute;inset:0;background:radial-gradient(closest-side,rgba(0,0,0,0.55),transparent);z-index:-1;"></div>
-        <p style="font-size: clamp(13px,1.1vw,16px); line-height: 1.5; color: #fff; margin: 0; max-width: 46ch; font-family: SFDisplay; text-shadow:0 1px 6px rgba(0,0,0,0.7);">8 ans de coaching, des centaines de vies transformées <br>réunies dans une app au service de ta progression.</p>
-      </div>
+      <a href="#offres" style="font-family:'SFDisplay',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.04em;text-transform:uppercase;color:#0a0a0a;background:#fff;border-radius:10px;padding:12px 16px;text-decoration:none;white-space:nowrap;">DEMARRER L'ENTRAINEMENT</a>
     </div>
     <div style="position:absolute;bottom:clamp(20px,4vh,32px);left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:6px;">
       
@@ -115,35 +140,25 @@
   </section>
 
   <!-- ===================== STATS ===================== -->
-  <section data-reveal="" data-screen-label="Stats" style="opacity:0;transform:translateY(var(--reveal-y));transition:opacity var(--reveal-dur) cubic-bezier(.2,.7,.2,1),transform var(--reveal-dur) cubic-bezier(.2,.7,.2,1);padding:clamp(40px,6vh,72px) clamp(20px,5vw,44px);">
-    <div style="text-align:center;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,0,0,0.55);margin-bottom:28px;">APRÈS 8 SEMAINES DANS L'ECOSYSTÈME</div>
+  <section data-reveal="" data-screen-label="Stats" style="opacity:0;transform:translateY(var(--reveal-y));transition:opacity var(--reveal-dur) cubic-bezier(.2,.7,.2,1),transform var(--reveal-dur) cubic-bezier(.2,.7,.2,1);padding:clamp(40px,6vh,72px) clamp(20px,5vw,44px);background:#000;">
+    <div style="text-align:center;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:28px;">APRÈS 8 SEMAINES DANS L'ECOSYSTÈME</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:24px;max-width:840px;margin:0 auto;text-align:center;">
       <div>
-        <div style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:clamp(34px,5vw,50px);letter-spacing:-0.02em;">98%</div>
-        <div style="font-size:13px;color:rgba(0,0,0,0.65);margin-top:4px;">Améliorent leurs physiques</div>
+        <div style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:clamp(34px,5vw,50px);letter-spacing:-0.02em;color:#fff;">98%</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:4px;">Améliorent leurs physiques</div>
       </div>
       <div>
-        <div style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:clamp(34px,5vw,50px);letter-spacing:-0.02em;">88%</div>
-        <div style="font-size:13px;color:rgba(0,0,0,0.65);margin-top:4px;">Valident les objectifs</div>
+        <div style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:clamp(34px,5vw,50px);letter-spacing:-0.02em;color:#fff;">88%</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:4px;">Valident les objectifs</div>
       </div>
       <div>
-        <div style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:clamp(34px,5vw,50px);letter-spacing:-0.02em;">83%</div>
-        <div style="font-size:13px;color:rgba(0,0,0,0.65);margin-top:4px;">Battent un record perso</div>
+        <div style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:clamp(34px,5vw,50px);letter-spacing:-0.02em;color:#fff;">83%</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:4px;">Battent un record perso</div>
       </div>
       <div>
-        <div style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:clamp(34px,5vw,50px);letter-spacing:-0.02em;">95%</div>
-        <div style="font-size:13px;color:rgba(0,0,0,0.65);margin-top:4px;">Retrouvent une discipline</div>
+        <div style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:clamp(34px,5vw,50px);letter-spacing:-0.02em;color:#fff;">95%</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:4px;">Retrouvent une discipline</div>
       </div>
-    </div>
-  </section>
-
-  <!-- ===================== DISCIPLINE ===================== -->
-  <section data-reveal="" data-screen-label="Discipline" style="opacity:0;transform:translateY(var(--reveal-y));transition:opacity var(--reveal-dur) cubic-bezier(.2,.7,.2,1),transform var(--reveal-dur) cubic-bezier(.2,.7,.2,1);background:#fff;position:relative;overflow:hidden;" class="discipline-wrap">
-    <img src="assets/discipline-block-v2.png" alt="Discipline — World class coach on your phone" style="width:100%;display:block;" class="discipline-img">
-    <h2 style="position:absolute;top:5%;left:4%;font-family:'SFDisplay',sans-serif;font-weight:800;font-size:clamp(24px,4vw,52px);letter-spacing:-0.02em;color:#0a0a0a;margin:0;" class="discipline-title-left">Discipline.</h2>
-    <div style="position:absolute;top:12%;left:64%;right:4%;" class="discipline-text-right">
-      <h2 style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:clamp(16px,2.6vw,32px);line-height:1.15;letter-spacing:-0.02em;color:#fff;margin:0 0 clamp(10px,2vw,24px);">Aucun entraînement laissé au hasard.</h2>
-      
     </div>
   </section>
 
@@ -183,77 +198,36 @@
     </div>
   </section>
 
+  <!-- ===================== PRE-PROGRAMMES (photo card) ===================== -->
+  
+
+  <!-- ===================== BENTO / MÉTHODE ===================== -->
+  
+
   <!-- ===================== PROGRAMMES / OFFRES (carrousel horizontal style Marchon) ===================== -->
-  <section id="offres" data-reveal="" data-screen-label="Programmes" style="opacity:0;transform:translateY(var(--reveal-y));transition:opacity var(--reveal-dur) cubic-bezier(.2,.7,.2,1),transform var(--reveal-dur) cubic-bezier(.2,.7,.2,1);padding:clamp(56px,8vh,88px) 0;background:#000;">
-    <div style="text-align:center;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:14px;">Accès à tous les programmes</div>
-    <h2 style="text-align:center;font-family:'SFDisplay',sans-serif;font-weight:800;font-size:clamp(30px,5vw,58px);letter-spacing:-0.02em;margin:0 0 40px;color:#fff;text-transform:uppercase;">Choisis ton programme</h2>
-
-    <div ref="{{ progTrackRef }}" class="prog-track" style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;overflow-x:visible;padding:0 clamp(20px,5vw,44px) 8px;">
-      <div class="prog-card" role="button" tabIndex="0" onClick="{{ openFondation }}" style="scroll-snap-align:start;flex:0 0 min(78vw,340px);aspect-ratio:3/4;position:relative;border-radius:20px;overflow:hidden;padding:0;background:#111;">
-        <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="fondation-img" ref="{{ fondationImgRef }}" placeholder="Photo séance force" style="position:absolute;inset:0;width:100%;height:100%;" hint-size="100%,100%"></x-import>
-        <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.15) 55%,rgba(0,0,0,0.05) 100%);"></div>
-        <div style="position:absolute;top:16px;right:16px;display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
-          <span style="font-size:11px;font-weight:700;color:#fff;background:rgba(255,255,255,0.14);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:0.5px solid rgba(255,255,255,0.28);border-radius:100px;padding:6px 12px;">En savoir plus</span>
-        </div>
-        <div style="position:absolute;left:20px;right:20px;bottom:20px;text-align:left;">
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;">
-            <h3 style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:26px;margin:0;color:#fff;">Hybrid Fondation</h3>
-            <div style="display:flex;align-items:center;flex-shrink:0;">
-              <img src="https://i.pravatar.cc/60?img=12" style="width:22px;height:22px;border-radius:100px;border:2px solid #000;object-fit:cover;">
-              <img src="https://i.pravatar.cc/60?img=33" style="width:22px;height:22px;border-radius:100px;border:2px solid #000;object-fit:cover;margin-left:-8px;">
-              <img src="https://i.pravatar.cc/60?img=45" style="width:22px;height:22px;border-radius:100px;border:2px solid #000;object-fit:cover;margin-left:-8px;">
-              <span style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.85);margin-left:6px;white-space:nowrap;">700+</span>
-            </div>
-          </div>
-          <p style="font-size:13px;line-height:1.5;color:rgba(255,255,255,0.75);margin:0;">6&nbsp;semaines pour reconstruire les bases : force, hypertrophie,&nbsp;course, discipline.</p>
-        </div>
-      </div>
-      <div class="prog-card" role="button" tabIndex="0" onClick="{{ openPerformance }}" style="scroll-snap-align:start;flex:0 0 min(78vw,340px);aspect-ratio:3/4;position:relative;border-radius:20px;overflow:hidden;padding:0;background:#111;">
-        <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="performance-img" ref="{{ performanceImgRef }}" placeholder="Photo course / cardio" style="position:absolute;inset:0;width:100%;height:100%;" hint-size="100%,100%"></x-import>
-        <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.15) 55%,rgba(0,0,0,0.05) 100%);"></div>
-        <div style="position:absolute;top:16px;right:16px;display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
-          <span style="font-size:11px;font-weight:700;color:#fff;background:rgba(255,255,255,0.14);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:0.5px solid rgba(255,255,255,0.28);border-radius:100px;padding:6px 12px;">En savoir plus</span>
-        </div>
-        <div style="position:absolute;left:20px;right:20px;bottom:20px;text-align:left;">
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;">
-            <h3 style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:26px;margin:0;color:#fff;">Hybrid Performance</h3>
-            <div style="display:flex;align-items:center;flex-shrink:0;">
-              <img src="https://i.pravatar.cc/60?img=15" style="width:22px;height:22px;border-radius:100px;border:2px solid #000;object-fit:cover;">
-              <img src="https://i.pravatar.cc/60?img=27" style="width:22px;height:22px;border-radius:100px;border:2px solid #000;object-fit:cover;margin-left:-8px;">
-              <img src="https://i.pravatar.cc/60?img=52" style="width:22px;height:22px;border-radius:100px;border:2px solid #000;object-fit:cover;margin-left:-8px;">
-              <span style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.85);margin-left:6px;white-space:nowrap;">278+</span>
-            </div>
-          </div>
-          <p style="font-size:13px;line-height:1.5;color:rgba(255,255,255,0.75);margin:0;">12 semaines d'entraînement avancé pour construire du volume et de l'intensité.</p>
-        </div>
-      </div>
-      <div class="prog-card" role="button" tabIndex="0" onClick="{{ openCoaching }}" style="scroll-snap-align:start;flex:0 0 min(78vw,340px);aspect-ratio:3/4;position:relative;border-radius:20px;overflow:hidden;padding:0;background:#111;">
-        <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="coaching-img" ref="{{ coachingImgRef }}" placeholder="Photo coaching / échange" style="position:absolute;inset:0;width:100%;height:100%;" hint-size="100%,100%"></x-import>
-        <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.15) 55%,rgba(0,0,0,0.05) 100%);"></div>
-        <div style="position:absolute;top:16px;left:16px;z-index:3;display:flex;gap:8px;">
-          <button type="button" onClick="{{ editCoachingPhoto }}" style="font-size:12px;font-weight:600;color:#fff;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.5);border-radius:100px;padding:7px 14px;cursor:pointer;">Modifier la photo</button>
-          <button type="button" onClick="{{ reframeCoachingPhoto }}" style="font-size:12px;font-weight:600;color:#fff;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.5);border-radius:100px;padding:7px 14px;cursor:pointer;">Recadrer</button>
-        </div>
-        <div style="position:absolute;top:16px;right:16px;display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
-          <span style="font-size:12px;font-weight:600;color:#fff;border:1px solid rgba(255,255,255,0.6);border-radius:100px;padding:6px 14px;">Avancé</span>
-          <span style="font-size:12px;font-weight:600;color:#fff;border:1px solid rgba(255,255,255,0.6);border-radius:100px;padding:6px 14px;">Accompagné</span>
-          <span style="font-size:11px;font-weight:700;color:#fff;background:rgba(255,255,255,0.14);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:0.5px solid rgba(255,255,255,0.28);border-radius:100px;padding:6px 12px;">En savoir plus</span>
-        </div>
-        <div style="position:absolute;left:20px;right:20px;bottom:20px;text-align:left;">
-          <h3 style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:26px;margin:0 0 8px;color:#fff;">Coaching privé</h3>
-          <p style="font-size:13px;line-height:1.5;color:rgba(255,255,255,0.75);margin:0;">8 semaines, suivi humain — le système devient une relation. (appel de qualification)<br></p>
-        </div>
-      </div>
-
-    </div>
-
-  </section>
+  
 
   <!-- ===================== TÉMOIGNAGES MARQUEE ===================== -->
-  <section data-reveal="" data-screen-label="Témoignages défilants" style="opacity:0;transform:translateY(var(--reveal-y));transition:opacity var(--reveal-dur) cubic-bezier(.2,.7,.2,1),transform var(--reveal-dur) cubic-bezier(.2,.7,.2,1);padding:clamp(48px,7vh,72px) 0;background:#000;overflow:hidden;">
+  
+
+  <!-- ===================== TÉMOIGNAGES MARQUEE ===================== -->
+  <section data-reveal="" data-screen-label="Sans excuse" style="opacity:0;transform:translateY(var(--reveal-y));transition:opacity var(--reveal-dur) cubic-bezier(.2,.7,.2,1),transform var(--reveal-dur) cubic-bezier(.2,.7,.2,1);padding:clamp(56px,8vh,88px) clamp(20px,5vw,44px) 0;background:#000;">
+    <div class="pre-programs-card" style="position:relative;max-width:1100px;margin:0 auto;border-radius:24px;overflow:hidden;aspect-ratio:16/10;">
+      <img src="assets/discipline-block-v2.png" alt="Athlète avec mockup téléphone" class="pre-programs-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:left center;">
+      <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0) 40%);"></div>
+      
+      <div style="position:absolute;right:6%;top:16%;max-width:min(260px,42%);">
+        
+      </div>
+      <div style="position:absolute;left:24px;right:24px;bottom:24px;">
+        <div class="pre-programs-label" style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:10px;">TCMV TRAINING APP</div>
+        
+      </div>
+    </div>
+  </section><section data-reveal="" data-screen-label="Témoignages défilants" style="opacity:0;transform:translateY(var(--reveal-y));transition:opacity var(--reveal-dur) cubic-bezier(.2,.7,.2,1),transform var(--reveal-dur) cubic-bezier(.2,.7,.2,1);padding:clamp(48px,7vh,72px) 0;background:#000;overflow:hidden;">
     <div style="text-align:center;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:28px;">Ils s'entraînent déjà avec nous</div>
     <div class="marquee-wrap" style="overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);">
-      <div class="marquee-track" style="display:flex;gap:14px;width:max-content;animation:marquee-rtl 60s linear infinite;">
+      <div class="marquee-track" ref="{{ marqueeRef }}" style="display:flex;gap:14px;width:max-content;animation:marquee-rtl 60s linear infinite;">
         <div style="flex:0 0 auto;width:300px;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.14);border-radius:18px;padding:16px 20px;">
           <div style="color:#fff;font-size:12px;margin-bottom:8px;">★★★★★</div>
           <p style="font-size:13px;line-height:1.5;font-weight:500;color:#fff;margin:0 0 8px;white-space:normal;font-family:'SFDisplay',sans-serif;">« Banger. »</p>
@@ -304,23 +278,90 @@
           <p style="font-size:13px;line-height:1.5;font-weight:500;color:#fff;margin:0 0 8px;white-space:normal;font-family:'SFDisplay',sans-serif;">« Le suivi est nickel, l'app est simple à utiliser et je vois vraiment mes charges progresser chaque semaine. »</p>
           <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);font-family:'SFDisplay',sans-serif;">Samm1</div>
         </div>
-        <div style="flex:0 0 auto;width:300px;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.14);border-radius:18px;padding:16px 20px;">
-          <div style="color:#fff;font-size:12px;margin-bottom:8px;">★★★★★</div>
-          <p style="font-size:13px;line-height:1.5;font-weight:500;color:#fff;margin:0 0 8px;white-space:normal;font-family:'SFDisplay',sans-serif;">« Structure claire dès le premier jour, résultats visibles en un mois. Exactement ce qu'il me manquait. »</p>
-          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);font-family:'SFDisplay',sans-serif;">Marc D.</div>
-        </div>
-        <div style="flex:0 0 auto;width:300px;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.14);border-radius:18px;padding:16px 20px;">
-          <div style="color:#fff;font-size:12px;margin-bottom:8px;">★★★★★</div>
-          <p style="font-size:13px;line-height:1.5;font-weight:500;color:#fff;margin:0 0 8px;white-space:normal;font-family:'SFDisplay',sans-serif;">« Fonce, hésite pas ! Le coach répond vite et le programme s'adapte vraiment à ton niveau. »</p>
-          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);font-family:'SFDisplay',sans-serif;">Inès K.</div>
-        </div>
-      </div>
+            </div>
     </div>
   </section>
 
-  <!-- ===================== TÉMOIGNAGES MARQUEE ===================== -->
-  <section data-reveal="" data-screen-label="Why TCMV" style="opacity:0;transform:translateY(var(--reveal-y));transition:opacity var(--reveal-dur) cubic-bezier(.2,.7,.2,1),transform var(--reveal-dur) cubic-bezier(.2,.7,.2,1);padding:clamp(40px,5.5vh,60px) clamp(20px,5vw,44px);background:#000;text-align:center;">
-    <div style="font-size:11.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:13px;">Remplace l'improvisation par un système</div>
+  <!-- ===================== WHY TCMV (vertical, objections) ===================== -->
+  
+
+  <!-- ===================== FONDATEUR ===================== -->
+  <section id="offres" data-reveal="" data-screen-label="Programmes" style="opacity:0;transform:translateY(var(--reveal-y));transition:opacity var(--reveal-dur) cubic-bezier(.2,.7,.2,1),transform var(--reveal-dur) cubic-bezier(.2,.7,.2,1);padding:clamp(56px,8vh,88px) 0;background:#000;">
+    <div style="text-align:center;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:14px;">Accès à tous les programmes</div>
+    <h2 style="text-align:center;font-family:'SFDisplay',sans-serif;font-weight:800;font-size:clamp(30px,5vw,58px);letter-spacing:-0.02em;margin:0 0 40px;color:#fff;text-transform:uppercase;">Choisis ton programme</h2>
+
+    <div ref="{{ progTrackRef }}" class="prog-track" style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;overflow-x:visible;padding:0 clamp(20px,5vw,44px) 8px;">
+      <div class="prog-card" role="button" tabIndex="0" onClick="{{ openFondation }}" style="scroll-snap-align:start;flex:0 0 min(78vw,340px);aspect-ratio:3/4;position:relative;border-radius:20px;overflow:hidden;padding:0;background:#111;">
+        <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="fondation-img" ref="{{ fondationImgRef }}" placeholder="Photo séance force" style="position:absolute;inset:0;width:100%;height:100%;" hint-size="100%,100%"></x-import>
+        <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.15) 55%,rgba(0,0,0,0.05) 100%);"></div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;text-align:left;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;">
+            <h3 style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:26px;margin:0;color:#fff;">Hybrid Fondation</h3>
+            <div class="prog-social" style="display:flex;align-items:center;flex-shrink:0;">
+              <img src="https://i.pravatar.cc/60?img=12" style="width:22px;height:22px;border-radius:100px;border:2px solid #000;object-fit:cover;">
+              <img src="https://i.pravatar.cc/60?img=33" style="width:22px;height:22px;border-radius:100px;border:2px solid #000;object-fit:cover;margin-left:-8px;">
+              <img src="https://i.pravatar.cc/60?img=45" style="width:22px;height:22px;border-radius:100px;border:2px solid #000;object-fit:cover;margin-left:-8px;">
+              <span style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.85);margin-left:6px;white-space:nowrap;">700+</span>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;">
+            <p style="font-size:13px;line-height:1.5;color:rgba(255,255,255,0.75);margin:0;max-width:75%;">6 semaines · Force &amp; endurance</p>
+            <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+              <span style="font-family:SFDisplay,sans-serif;font-weight:800;font-size:15px;color:#fff;">79€</span>
+<span style="font-size:11px;font-weight:700;color:#0a0a0a;background:#fff;border-radius:100px;padding:8px 14px;white-space:nowrap;flex-shrink:0;">Découvrir</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="prog-card" role="button" tabIndex="0" onClick="{{ openPerformance }}" style="scroll-snap-align:start;flex:0 0 min(78vw,340px);aspect-ratio:3/4;position:relative;border-radius:20px;overflow:hidden;padding:0;background:#111;">
+        <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="performance-img" ref="{{ performanceImgRef }}" placeholder="Photo course / cardio" style="position:absolute;inset:0;width:100%;height:100%;" hint-size="100%,100%"></x-import>
+        <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.15) 55%,rgba(0,0,0,0.05) 100%);"></div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;text-align:left;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;">
+            <h3 style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:26px;margin:0;color:#fff;">Hybrid Performance</h3>
+            <div class="prog-social" style="display:flex;align-items:center;flex-shrink:0;">
+              <img src="https://i.pravatar.cc/60?img=15" style="width:22px;height:22px;border-radius:100px;border:2px solid #000;object-fit:cover;">
+              <img src="https://i.pravatar.cc/60?img=27" style="width:22px;height:22px;border-radius:100px;border:2px solid #000;object-fit:cover;margin-left:-8px;">
+              <img src="https://i.pravatar.cc/60?img=52" style="width:22px;height:22px;border-radius:100px;border:2px solid #000;object-fit:cover;margin-left:-8px;">
+              <span style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.85);margin-left:6px;white-space:nowrap;">278+</span>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;">
+            <p style="font-size:13px;line-height:1.5;color:rgba(255,255,255,0.75);margin:0;max-width:75%;">12 semaines · Volume &amp; intensité</p>
+            <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+              <span style="font-family:SFDisplay,sans-serif;font-weight:800;font-size:15px;color:#fff;">149€</span>
+<span style="font-size:11px;font-weight:700;color:#0a0a0a;background:#fff;border-radius:100px;padding:8px 14px;white-space:nowrap;flex-shrink:0;">Découvrir</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="prog-card" role="button" tabIndex="0" onClick="{{ openCoaching }}" style="scroll-snap-align:start;flex:0 0 min(78vw,340px);aspect-ratio:3/4;position:relative;border-radius:20px;overflow:hidden;padding:0;background:#111;">
+        <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="coaching-img" ref="{{ coachingImgRef }}" placeholder="Photo coaching / échange" style="position:absolute;inset:0;width:100%;height:100%;" hint-size="100%,100%"></x-import>
+        <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.15) 55%,rgba(0,0,0,0.05) 100%);"></div>
+        <div style="position:absolute;top:16px;left:16px;z-index:3;display:flex;gap:8px;">
+          <button type="button" onClick="{{ editCoachingPhoto }}" style="font-size:12px;font-weight:600;color:#fff;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.5);border-radius:100px;padding:7px 14px;cursor:pointer;">Modifier la photo</button>
+          <button type="button" onClick="{{ reframeCoachingPhoto }}" style="font-size:12px;font-weight:600;color:#fff;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.5);border-radius:100px;padding:7px 14px;cursor:pointer;">Recadrer</button>
+        </div>
+        <div style="position:absolute;top:16px;right:16px;display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+          <span style="font-size:12px;font-weight:600;color:#fff;border:1px solid rgba(255,255,255,0.6);border-radius:100px;padding:6px 14px;">Avancé</span>
+          <span style="font-size:12px;font-weight:600;color:#fff;border:1px solid rgba(255,255,255,0.6);border-radius:100px;padding:6px 14px;">Accompagné</span>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;text-align:left;">
+          <h3 style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:26px;margin:0 0 8px;color:#fff;">Coaching privé</h3>
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;">
+            <p style="font-size:13px;line-height:1.5;color:rgba(255,255,255,0.75);margin:0;max-width:75%;">8 semaines · Accompagnement 1:1</p>
+            <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+              <span style="font-family:SFDisplay,sans-serif;font-weight:800;font-size:15px;color:#fff;">497€</span>
+<span style="font-size:11px;font-weight:700;color:#0a0a0a;background:#fff;border-radius:100px;padding:8px 14px;white-space:nowrap;flex-shrink:0;">Découvrir</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section><section data-reveal="" data-screen-label="Why TCMV" style="opacity:0;transform:translateY(var(--reveal-y));transition:opacity var(--reveal-dur) cubic-bezier(.2,.7,.2,1),transform var(--reveal-dur) cubic-bezier(.2,.7,.2,1);padding:clamp(40px,5.5vh,60px) clamp(20px,5vw,44px);background:#000;text-align:center;">
+    <div style="font-size:11.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:13px;">ARRÊTE L'EXERCICE, DÉMARRE L'ENTRAINEMENT.</div>
     <h2 style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:clamp(28px,4vw,44px);letter-spacing:-0.02em;color:#fff;margin:0 0 28px;">POURQUOI TCMV ?</h2>
 
     <div style="width:1px;height:28px;background:rgba(255,255,255,0.3);margin:0 auto 28px;position:relative;">
@@ -366,30 +407,32 @@
     <div style="text-align:center;">
       <a href="#offres" style="margin-top:22px;background:#fff;color:#0a0a0a;font-size:14px;font-weight:700;border-radius:100px;padding:14px 28px;cursor:pointer;text-decoration:none;display:inline-block;">Démarrer l'entraînement</a>
     </div>
-  </section>
+  </section><section data-reveal="" data-screen-label="Fondateur" style="opacity:0;transform:translateY(var(--reveal-y));transition:opacity var(--reveal-dur) cubic-bezier(.2,.7,.2,1),transform var(--reveal-dur) cubic-bezier(.2,.7,.2,1);padding:clamp(40px,6vh,64px) clamp(20px,5vw,44px) clamp(48px,7vh,72px);background:#fff;">
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(0,0,0,0.5);margin-bottom:12px;">STORY</div>
+    
 
-  <!-- ===================== WHY TCMV (vertical, objections) ===================== -->
-  
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px;">
+      <div style="width:52px;height:52px;border-radius:14px;overflow:hidden;flex:none;position:relative;">
+        <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="founder-img" placeholder="Photo du fondateur" style="width:100%;height:100%;position:absolute;inset:0;" hint-size="100%,100%"></x-import>
+      </div>
+      <div>
+        <div style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:15px;color:#000;">Thomas</div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:rgba(0,0,0,0.5);">Fondateur — TCMV</div>
+      </div>
+    </div>
 
-  <!-- ===================== FONDATEUR ===================== -->
-  <section data-reveal="" data-screen-label="Fondateur" style="opacity:0;transform:translateY(var(--reveal-y));transition:opacity var(--reveal-dur) cubic-bezier(.2,.7,.2,1),transform var(--reveal-dur) cubic-bezier(.2,.7,.2,1);padding:clamp(32px,5vh,56px) clamp(20px,5vw,44px) 24px;background:#fff;">
-    <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(0,0,0,0.55);margin-bottom:12px;">Le fondateur</div>
-    <h2 style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:clamp(26px,3.6vw,40px);letter-spacing:-0.015em;margin:0 0 32px;color:#000;">Pourquoi ?</h2>
-    <div style="max-width:none;">
-      <p style="font-family: 'SFDisplay',sans-serif; font-weight: 700; font-size: clamp(19px,2.2vw,25px); line-height: 1.3; letter-spacing: -0.01em; margin: 0 0 8px; color: #000; text-align: justify">Je suis Thomas, il&nbsp;y a 8 ans j'ai fais le choix de modifier la trajectoire de ma vie et de construire les compétences que j'avais besoin pour affronter ma destinée. Depuis j'ai accompli presque tous les rêves que j'avais à ce moment là : ouvrir ma salle de sport, construire ma communauté, faire des expéditions en montagne, courir, rouler, nager, voyager, entreprendre et collaborer avec des gens inspirants.<br><br>Tout ça n'est rendu possible grâce une foi irrationnelle, de l'action, une discipline quotidienne et un engagement personnel total.&nbsp;</p>
+    <p style="font-family:'SFDisplay',sans-serif;font-weight:700;font-size:clamp(19px,2.4vw,26px);line-height:1.35;letter-spacing:-0.01em;margin:0 0 16px;color:#000;">« J'ai construit TCMV pour ne plus jamais improviser un entraînement. »</p>
+
+    <div style="max-width:66ch;">
+      <p style="font-size:15px;line-height:1.65;color:rgba(0,0,0,0.72);margin:0 0 14px;">Il y a 8 ans, j'ai décidé de changer la trajectoire de ma vie : ouvrir ma salle, construire ma communauté, m'entraîner pour la montagne, la course, le triathlon. J'ai vu passer des centaines de personnes — les mêmes erreurs revenaient toujours : programmes copiés-collés, aucun suivi, aucune progression réelle.</p>
+      <p style="font-size:15px;line-height:1.65;color:rgba(0,0,0,0.72);margin:0 0 20px;">TCMV, c'est cette expérience de terrain transformée en système : des programmes structurés, une nutrition calculée pour toi, et un vrai coach quand tu en as besoin — pas un PDF générique de plus.</p>
 
       <sc-if value="{{ founderExpanded }}" hint-placeholder-val="{{ false }}">
-        <p style="font-family: 'SFDisplay',sans-serif; font-weight: 700; font-size: clamp(19px,2.2vw,25px); line-height: 1.3; letter-spacing: -0.01em; margin: 0 0 8px; color: #000; text-align: justify">Cela est construit brique par brique au quotidien, dans ton entrainement. C'est le pilier de ta confiance, de ta capacité à affronter l'adversité, et pour construire un physique compétent, résilient, athlétique qui te permet d'exprimer qui tu es.&nbsp;<br><br>TCMV : The collective movement. Aujourd'hui ce nom incarne un mouvement pour ceux qui refuse la médiocrité, où l'entrainement fait partie intégrante de leur quotidien. Un symbole de polyvalence, de discipline et de santé.</p>
+        <p style="font-size:15px;line-height:1.65;color:rgba(0,0,0,0.72);margin:0 0 14px;">Ce que je vends, je l'ai testé sur moi et sur des centaines d'athlètes avant toi : force, hypertrophie, course, discipline — la même méthode, ajustée à ton niveau.</p>
+        <p style="font-size:15px;line-height:1.65;color:rgba(0,0,0,0.72);margin:0 0 20px;">The Collective Movement, c'est un mouvement pour ceux qui refusent l'improvisation et font de l'entraînement une discipline de vie — pas une exception.</p>
       </sc-if>
 
-      <button type="button" onClick="{{ toggleFounder }}" style="background:none;border:none;padding:0;margin:0 0 32px;font-size:14px;font-weight:700;color:#000;text-decoration:underline;cursor:pointer;">{{ founderToggleLabel }}</button>
-
-      <div style="display:flex;align-items:center;gap:14px;">
-        <div style="width:48px;height:48px;border-radius:14px;overflow:hidden;flex:none;position:relative;">
-          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="founder-img" placeholder="Photo du fondateur" style="width:100%;height:100%;position:absolute;inset:0;" hint-size="100%,100%"></x-import>
-        </div><div style="font-size:13px;font-weight:700;color:rgba(0,0,0,0.75);padding-top:6px;">Thomas - Fondateur.</div>
-        
-      </div>
+      <button type="button" onClick="{{ toggleFounder }}" style="background:none;border:none;padding:0;font-size:14px;font-weight:700;color:#000;text-decoration:underline;cursor:pointer;">{{ founderToggleLabel }}</button>
     </div>
   </section>
 
@@ -453,6 +496,15 @@
 
     <div style="text-align:center;margin-top:48px;">
       <a href="#offres" style="background:#fff;color:#0a0a0a;font-size:14px;font-weight:700;border-radius:100px;padding:16px 34px;cursor:pointer;text-decoration:none;display:inline-block;">Démarrer l'entraînement</a>
+    </div>
+  </section>
+
+  <!-- ===================== PHOTO / MOBILITÉ ===================== -->
+  <section data-reveal="" data-screen-label="Mobilité" style="opacity:0;transform:translateY(var(--reveal-y));transition:opacity var(--reveal-dur) cubic-bezier(.2,.7,.2,1),transform var(--reveal-dur) cubic-bezier(.2,.7,.2,1);position:relative;height:clamp(320px,55vh,560px);overflow:hidden;background:#000;">
+    <img src="assets/pre-programs-block.jpg" alt="Athlète sur piste de course" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.4);"></div>
+    <div style="position:relative;z-index:2;height:100%;display:flex;align-items:center;justify-content:center;padding:0 clamp(24px,6vw,64px);">
+      <h2 style="text-align:center;font-family:'SFDisplay',sans-serif;font-weight:800;font-size:clamp(24px,3.4vw,40px);line-height:1.2;letter-spacing:-0.015em;color:#fff;margin:0;max-width:22ch;">Un système qui s'adapte, jamais l'inverse.</h2>
     </div>
   </section>
   </div>
@@ -620,43 +672,35 @@
   </sc-if>
 
   <!-- ===================== FIXED CTA BAR ===================== -->
-  <div data-cta-bar="" style="position:fixed;left:50%;bottom:20px;z-index:95;transform:translate(-50%,140%);width:min(92vw,560px);background:rgba(20,20,20,0.55);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:0.5px solid rgba(255,255,255,0.18);box-shadow:inset 0 1px 1px rgba(255,255,255,0.2),inset 0 -1px 2px rgba(0,0,0,0.15),0 20px 40px rgba(0,0,0,0.35);border-radius:100px;padding:10px 10px 10px 22px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;transition:transform .3s ease;">
-    <div style="display:flex;align-items:baseline;gap:10px;min-width:0;flex-wrap:wrap;">
-      <span style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:13px;color:#fff;white-space:nowrap;">TCMV</span>
-      <span style="font-size:11px;color:rgba(255,255,255,0.6);">Système complet</span>
-    </div>
-    <a class="cta-pill" href="#offres" style="font-size:12px;font-weight:700;color:#0a0a0a;background:#fff;padding:11px 20px;border-radius:100px;white-space:nowrap;">Démarrer l'entraînement</a>
-  </div>
-
   <!-- ===================== MODAL PROGRAMME ===================== -->
   <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
-    <div onClick="{{ closeModal }}" style="position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;">
+    <div onClick="{{ closeModal }}" class="modal-overlay" style="position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;">
       <div onClick="{{ stopProp }}" class="modal-card" style="width:min(560px,100%);max-width:100%;box-sizing:border-box;max-height:none;border-radius:24px;position:relative;overflow:hidden;margin:auto;">
         <div style="position:absolute;inset:-20px;z-index:0;filter:blur(14px) brightness(0.6) saturate(1.1);transform:scale(1.08);pointer-events:none;">
           <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ modalImgId }}" placeholder="Photo programme" style="width:100%;height:100%;" hint-size="100%,100%"></x-import>
         </div>
         <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.6) 50%,rgba(0,0,0,0.9) 100%);"></div>
         <button class="modal-close" type="button" onClick="{{ closeModal }}" style="position:absolute;top:16px;right:16px;z-index:5;background:none;border:none;font-size:24px;color:#fff;cursor:pointer;line-height:1;">×</button>
-        <div class="modal-body" style="position:relative;z-index:2;padding:clamp(20px,4vw,28px);">
+        <div class="modal-body" style="position:relative;z-index:2;padding:clamp(20px,4vw,28px);padding-top:clamp(56px,9vw,64px);max-height:80vh;overflow-y:auto;">
+
           <div class="modal-eyebrow" style="font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:6px;">{{ modalTag }}</div>
-          <h3 class="modal-title" style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:clamp(19px,2.6vw,23px);margin:0 0 8px;letter-spacing:-0.015em;color:#fff;">{{ modalTitle }}</h3>
-          <p class="modal-desc" style="font-size:12px;line-height:1.45;color:rgba(255,255,255,0.7);margin:0 0 14px;">{{ modalDesc }}</p>
-          <ul class="modal-features" style="list-style:none;margin:0 0 14px;padding:0;display:flex;flex-direction:column;gap:5px;">
+          <h3 class="modal-title" style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:clamp(19px,2.6vw,23px);margin:0 0 16px;letter-spacing:-0.015em;color:#fff;">{{ modalTitle }}</h3>
+
+          
+          <div style="box-sizing: border-box; display: flex; flex-direction: column; gap: 12px"><p class="modal-desc" style="font-size: 12px; line-height: 1.45; color: rgba(255,255,255,0.7); margin: 0 0 14px; white-space: pre-line">{{ modalDesc }}</p></div>
+          <ul class="modal-features" style="list-style:none;margin:0 0 20px;padding:0;display:flex;flex-direction:column;gap:5px;">
             <sc-for list="{{ modalFeatures }}" as="feature" hint-placeholder-count="5">
               <li class="modal-feature-item" style="display:flex;align-items:flex-start;gap:6px;font-size:11.5px;line-height:1.4;color:rgba(255,255,255,0.7);">
                 <span>–</span><span>{{ feature }}</span>
               </li>
             </sc-for>
           </ul>
-          <div class="modal-tags" style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:16px;">
-            <sc-for list="{{ modalTags }}" as="tag" hint-placeholder-count="3">
-              <span style="font-size:9.5px;font-weight:700;padding:5px 10px;background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:0.5px solid rgba(255,255,255,0.25);color:#fff;border-radius:100px;">{{ tag }}</span>
-            </sc-for>
-          </div>
+
           <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:nowrap;" class="modal-cta-row">
-            <a class="cta-pill" href="{{ modalAnchor }}" onClick="{{ closeModal }}" style="background:#fff;color:#0a0a0a;font-size:11px;font-weight:700;padding:9px 16px;border-radius:100px;white-space:nowrap;">{{ modalCta }}</a>
             <span style="font-family:'SFDisplay',sans-serif;font-weight:800;font-size:14px;color:#fff;white-space:nowrap;">{{ modalPrice }}</span>
+            <a class="cta-pill modal-final-cta" href="{{ modalAnchor }}" onClick="{{ closeModal }}" style="background: #fff; color: #0a0a0a; border: none; border-radius: 100px; font-size: 12px; font-weight: 700; letter-spacing: 0.02em; cursor: pointer; padding: 10px 18px; font-family: SFDisplay; text-decoration: none; white-space: nowrap">{{ modalCta }}</a>
           </div>
+
         </div>
       </div>
     </div>
@@ -669,35 +713,53 @@
 <script type="text/x-dc" data-dc-script>
 const PROGRAMS = {
   fondation: {
-    tag: "Je pose les bases", title: "Hybrid Fondation",
-    desc: "6 semaines pour reprendre le contrôle sans dépendre de personne, avec une structure claire du premier au dernier jour. Ressource nutrition fondation, calculateur de macros et zones cardiaques inclus.",
+    tag: "Détail du programme", title: "Hybrid Fondation",
+    story: "La plupart des gens qui nous rejoignent ici n'ont jamais eu de vraie structure. Ils s'entraînaient par à-coups, sans savoir si ce qu'ils faisaient les rapprochait de quoi que ce soit.",
+    audience: "Pour toi si tu repars de zéro, ou si tu t'entraînes depuis un moment sans jamais avoir eu de plan clair à suivre.",
+    objective: "Reprendre le contrôle de ton entraînement en 6 semaines : une structure simple, des repères clairs, et les bases pour ne plus jamais improviser une séance.",
+    desc: "6 semaines, 5 entrainement par semaine en Force / Hypertrophie / Running.\nAccessible à tous les niveaux, ce programme te propose une structure claire, simple et efficace pour construire muscle / endurance / discipline et devenir un athlète Hybride.",
     tags: ["6 semaines", "3 séances force / sem", "2 séances course / sem"],
-    features: ["Programme force et course sur 4 semaines", "Ressource nutrition fondation", "Calculateur de macros personnalisé", "Zones cardiaques calculées pour toi", "Accès à l'app pendant 30 jours"],
-    price: "79€", cta: "Démarrer l'entrainement\n", anchor: "https://buy.stripe.com/28EdRb9RG5NA93haXz6Ri03", dark: false
+    features: ["6 Semaines, Force / Hypertrophie x3 / Running x 2", "Ressource nutrition fondation", "Calculateur de macros personnalisé", "Calculateur de Zones cardiaques", "Le programme peut aussi être suivi sans la partie running."],
+    price: "79€", cta: "Démarrer l'entrainement", anchor: "https://buy.stripe.com/28EdRb9RG5NA93haXz6Ri03", dark: false
   },
   performance: {
-    tag: "Je structure la suite", title: "Hybrid Performance",
-    desc: "La suite logique quand Fondation a fait son travail : douze semaines d'entraînement avancé pour construire une vraie progression. Nutrition avancée, macros et zones cardiaques ajustées à ce rythme plus long.",
+    tag: "Détail du programme", title: "Hybrid Performance",
+    story: "Fondation t'a donné la structure. Mais au bout de quelques semaines, un plan de débutant devient trop léger pour continuer à progresser.",
+    audience: "Pour toi si tu as déjà une base solide et que tu veux passer à un volume et une intensité supérieurs, sans improviser la suite.",
+    objective: "Construire une vraie progression sur 12 semaines : plus de volume, une nutrition ajustée à ce rythme, et un suivi de charge séance après séance.",
+    desc: "A la suite de fondation ou si tu cherches un programme pour augmenter ton niveau, ton volume d'entrainement : 12 semaines d'entraînement avancé pour construire un vrai niveau. Gros volume d'entrainement avec 7 à 9 séances par semaine.\n",
     tags: ["12 semaines", "5 séances force / sem", "3-4 séances course / sem"],
-    features: ["Programme avancé sur 12 semaines", "Nutrition et macros ajustées au volume", "Zones cardiaques recalibrées", "Suivi de charge séance par séance", "Accès à l'app pendant 90 jours"],
+    features: ["Programme avancé sur 12 semaines", "Ebook Nutrition avancée", "Calculateur de macros personnalisé", "Calculateur de Zones cardiaques", "Niveau 4,5/5"],
     price: "149€", cta: "Démarrer l'entrainement", anchor: "#offres", dark: false
   },
   coaching: {
-    tag: "Je veux un accompagnement", title: "Coaching privé",
-    desc: "Ici le système devient une relation. Un appel toutes les deux semaines pour ajuster le mindset, le programme, la nutrition et l'environnement. Quelqu'un regarde tes chiffres avec toi.",
+    tag: "Détail du programme", title: "Coaching privé",
+    story: "Certains n'ont pas besoin d'un programme de plus — ils ont besoin de quelqu'un qui regarde leurs chiffres, ajuste le plan, et répond quand ça coince.",
+    audience: "Pour toi si tu veux un accompagnement humain : quelqu'un qui suit ta progression de près et ajuste tout avec toi, pas seulement une app.",
+    objective: "Un suivi personnalisé sur 8 semaines : appel toutes les deux semaines, programme, nutrition et mindset ajustés en continu avec ton coach.",
+    desc: "Tu construis en direct avec Thomas ton programme en fonction de tes objectifs, tes besoins. Au delà du plan d'entrainement c'est un coaching complet, un appel toutes les deux semaines pour ajuster le mindset, le programme, la nutrition et l'environnement, un contact en direct sur télégram et un bilan chaque fin de semaine pour rester aligné avec les objectifs.\n\nLe mentorat, l'engagement sont les moyens le plus radical pour progresser.",
     tags: ["8 semaines", "2 appels onboarding", "Suivi quotidien"],
-    features: ["Un appel toutes les deux semaines", "Programme ajusté en continu", "Nutrition et mindset suivis avec toi", "Réponses à toutes tes questions", "Accès prioritaire à ton coach"],
+    features: ["accompagnement 7j/7", "2 x 4 semaines de programmation", "Nutrition et mindset en coaching 1:1", "Réponses à toutes tes questions", "Accès prioritaire à ton coach"],
     price: "497€", cta: "Demander le coaching →", anchor: "#offres", dark: true
   }
 };
 
 class Component extends DCLogic {
-  state = { modalOpen: null, quizOpen: false, quizStep: 0, quizScores: { fondation: 0, performance: 0, coaching: 0 }, founderExpanded: false, legalOpen: null };
+  state = { modalOpen: null, modalSlide: 0, quizOpen: false, quizStep: 0, quizScores: { fondation: 0, performance: 0, coaching: 0 }, founderExpanded: false, legalOpen: null };
 
   openLegal(key, e) { if (e && e.stopPropagation) e.stopPropagation(); this.setState({ legalOpen: key }); document.body.style.overflow = 'hidden'; }
   closeLegal(e) { if (e && e.stopPropagation) e.stopPropagation(); this.setState({ legalOpen: null }); document.body.style.overflow = ''; }
 
+  _marqueeClone() {
+    const t = this._marqueeEl;
+    if (!t || t.dataset.cloned) return;
+    const originals = Array.from(t.children);
+    originals.forEach(c => { const k = c.cloneNode(true); k.setAttribute('aria-hidden', 'true'); k.setAttribute('data-marquee-clone', ''); t.appendChild(k); });
+    t.dataset.cloned = '1';
+  }
+
   componentDidMount() {
+    this._marqueeClone();
     this._reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     this._tryPlayVideo();
     this._videoPlayIv = setInterval(() => this._tryPlayVideo(), 400);
@@ -719,6 +781,7 @@ class Component extends DCLogic {
       entries.forEach((entry) => {
         const bar = document.querySelector('[data-cta-bar]');
         if (!bar) return;
+        return;
         const pastHero = !entry.isIntersecting && entry.boundingClientRect.top < 0;
         bar.style.transform = pastHero ? 'translate(-50%,0)' : 'translate(-50%,140%)';
       });
@@ -824,8 +887,10 @@ class Component extends DCLogic {
     if (!el) return;
     el.dispatchEvent(new MouseEvent('dblclick', { bubbles: true, cancelable: true }));
   }
-  openModal(key) { this.setState({ modalOpen: key }); document.body.style.overflow = 'hidden'; }
+  openModal(key) { this.setState({ modalOpen: key, modalSlide: 0 }); document.body.style.overflow = 'hidden'; }
   closeModal(e) { if (e && e.stopPropagation) e.stopPropagation(); this.setState({ modalOpen: null }); document.body.style.overflow = ''; }
+  modalNext(e) { if (e && e.stopPropagation) e.stopPropagation(); this.setState(s => ({ modalSlide: Math.min(2, s.modalSlide + 1) })); }
+  modalPrev(e) { if (e && e.stopPropagation) e.stopPropagation(); this.setState(s => ({ modalSlide: Math.max(0, s.modalSlide - 1) })); }
   stopProp(e) { if (e && e.stopPropagation) e.stopPropagation(); }
 
   openQuiz() { this.setState({ quizOpen: true, quizStep: 0, quizScores: { fondation: 0, performance: 0, coaching: 0 } }); }
@@ -840,6 +905,7 @@ class Component extends DCLogic {
   }
 
   renderVals() {
+    const marqueeRef = (el) => { this._marqueeEl = el; if (el) setTimeout(() => this._marqueeClone(), 0); };
     const comparatifRows = [
       { label: 'Mise en route rapide', gym: true, gymNo: false },
       { label: 'Programme haute performance', gym: true, gymNo: false },
@@ -853,6 +919,7 @@ class Component extends DCLogic {
     const result = PROGRAMS[resultKey];
 
     return {
+      marqueeRef,
       comparatifRows,
       heroVideoRef: (el) => { this._heroVideo = el; },
       parcoursFillRef: (el) => { this._parcoursFill = el; },
@@ -902,6 +969,16 @@ class Component extends DCLogic {
       modalImgId: this.state.modalOpen ? this.state.modalOpen + '-img' : 'modal-img',
       modalTag: m ? m.tag : (this.state.quizStep >= 7 ? result.tag : ''),
       modalTitle: m ? m.title : result.title,
+      modalStory: m ? m.story : '',
+      modalAudience: m ? m.audience : '',
+      modalObjective: m ? m.objective : '',
+      modalSlide: this.state.modalSlide,
+      modalSlide0: this.state.modalSlide === 0,
+      modalSlide1: this.state.modalSlide === 1,
+      modalSlide2: this.state.modalSlide === 2,
+      modalDots: [0,1,2].map(i => i === this.state.modalSlide ? '#fff' : 'rgba(255,255,255,0.25)'),
+      modalNext: (e) => this.modalNext(e),
+      modalPrev: (e) => this.modalPrev(e),
       modalDesc: m ? m.desc : result.desc,
       modalTags: m ? m.tags : [],
       modalFeatures: m ? m.features : [],
